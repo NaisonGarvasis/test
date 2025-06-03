@@ -1,10 +1,16 @@
-
 @and(
   contains(item()?['name'], 'Alice'),
-  greater(length(
-    filter(
-      variables('allowedRoles'),
-      contains(item()?['role'], current())
-    )
-  ), 0)
+  or(
+    contains(item()?['role'], 'Manager'),
+    contains(item()?['role'], 'Admin'),
+    contains(item()?['role'], 'Supervisor'),
+    contains(item()?['role'], 'Lead'),
+    contains(item()?['role'], 'Owner'),
+    contains(item()?['role'], 'Coordinator'),
+    contains(item()?['role'], 'Analyst'),
+    contains(item()?['role'], 'Executive'),
+    contains(item()?['role'], 'Specialist'),
+    contains(item()?['role'], 'Director'),
+    contains(item()?['role'], 'Consultant')
+  )
 )
