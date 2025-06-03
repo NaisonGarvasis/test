@@ -1,1 +1,10 @@
 
+@and(
+  contains(item()?['name'], 'Alice'),
+  greater(length(
+    filter(
+      variables('allowedRoles'),
+      contains(item()?['role'], current())
+    )
+  ), 0)
+)
