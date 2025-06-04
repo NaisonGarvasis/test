@@ -1,4 +1,14 @@
-join(skip(take(split(variables('fileName'), '_'), sub(length(split(variables('fileName'), '_')), 2)), 2), '_')
+concat(
+  join(
+    take(
+      skip(split(split(variables('fileName'), '/')[1], '_'), 2),
+      sub(length(split(split(variables('fileName'), '/')[1], '_')), 2)
+    ),
+    '_'
+  ),
+  '.pdf'
+)
+
 
 
 {
