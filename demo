@@ -2,3 +2,6 @@
   "SortKey": "@{items('Apply_to_each_ID')['Date']}-@{padLeft(replace(items('Apply_to_each_ID')['Version'], '.', ''), 4, '0')}",
   "Data": "@items('Apply_to_each_ID')"
 }
+
+
+It worked! We’re now trying to download eleven specific files by filtering against their Clausematch IDs, and that part worked too. However, each of those eleven IDs returns multiple versions of the same file, including draft versions. So now, we’re working on filtering it further to get only the latest version by splitting the Object Key into multiple parts and also taking the Policy modified date into account.
