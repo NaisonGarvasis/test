@@ -1,4 +1,4 @@
-join(skip(take(split(variables('fileName'), '_'), length(split(variables('fileName'), '_')) - 2), 2), '_')
+join(skip(take(split(variables('fileName'), '_'), sub(length(split(variables('fileName'), '_')), 2)), 2), '_')
 
 
 {
