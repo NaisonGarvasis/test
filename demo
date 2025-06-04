@@ -1,51 +1,13 @@
 concat(
   join(
-    take(
-      skip(
-        split(replace(split(variables('fileName'), '/')[1], '.pdf', ''), '_'),
-        2
+    skip(
+      take(
+        split(variables('fileName'), '_'),
+        sub(length(split(variables('fileName'), '_')), 2)
       ),
-      sub(
-        length(split(replace(split(variables('fileName'), '/')[1], '.pdf', '')),  '_'),
-        2
-      )
+      2
     ),
     '_'
   ),
   '.pdf'
-)
-
-
-
-
-{
-  "SortKey": "@{items('Apply_to_each_ID')['Date']}-@{padLeft(replace(items('Apply_to_each_ID')['Version'], '.', ''), 4, '0')}",
-  "Data": "@items('Apply_to_each_ID')"
-}
-
-
-concat(
-    substring(
-        variables('FullFileName'),
-        add(
-            indexOf(variables('FullFileName'), '_', indexOf(variables('FullFileName'), '_') + 1) + 1,
-            indexOf(
-                substring(
-                    variables('FullFileName'),
-                    indexOf(variables('FullFileName'), '_', indexOf(variables('FullFileName'), '_') + 1) + 1,
-                    sub(lastIndexOf(variables('FullFileName'), '_'), indexOf(variables('FullFileName'), '_', indexOf(variables('FullFileName'), '_') + 1) + 1)
-                ),
-                '_'
-            ) + 1
-        ),
-        sub(
-            lastIndexOf(variables('FullFileName'), '_'),
-            add(
-                indexOf(variables('FullFileName'), '_', indexOf(variables('FullFileName'), '_') + 1),
-                1
-            )
-        )
-    ),
-    '.',
-    last(split(variables('FullFileName'), '.'))
 )
