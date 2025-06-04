@@ -1,3 +1,6 @@
+join(skip(take(split(variables('fileName'), '_'), length(split(variables('fileName'), '_')) - 2), 2), '_')
+
+
 {
   "SortKey": "@{items('Apply_to_each_ID')['Date']}-@{padLeft(replace(items('Apply_to_each_ID')['Version'], '.', ''), 4, '0')}",
   "Data": "@items('Apply_to_each_ID')"
