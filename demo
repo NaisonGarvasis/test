@@ -4,4 +4,28 @@
 }
 
 
-It worked! We’re now trying to download eleven specific files by filtering against their Clausematch IDs, and that part worked too. However, each of those eleven IDs returns multiple versions of the same file, including draft versions. So now, we’re working on filtering it further to get only the latest version by splitting the Object Key into multiple parts and also taking the Policy modified date into account.
+concat(
+    substring(
+        variables('FullFileName'),
+        add(
+            indexOf(variables('FullFileName'), '_', indexOf(variables('FullFileName'), '_') + 1) + 1,
+            indexOf(
+                substring(
+                    variables('FullFileName'),
+                    indexOf(variables('FullFileName'), '_', indexOf(variables('FullFileName'), '_') + 1) + 1,
+                    sub(lastIndexOf(variables('FullFileName'), '_'), indexOf(variables('FullFileName'), '_', indexOf(variables('FullFileName'), '_') + 1) + 1)
+                ),
+                '_'
+            ) + 1
+        ),
+        sub(
+            lastIndexOf(variables('FullFileName'), '_'),
+            add(
+                indexOf(variables('FullFileName'), '_', indexOf(variables('FullFileName'), '_') + 1),
+                1
+            )
+        )
+    ),
+    '.',
+    last(split(variables('FullFileName'), '.'))
+)
