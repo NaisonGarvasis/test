@@ -1,9 +1,14 @@
 ID - split(split(triggerOutputs()?['body'], '/')[1], '_')[0]
 Date - split(triggerOutputs()?['body'], '_')[1]
 Version - split(triggerOutputs()?['body'], '_')[length(split(triggerOutputs()?['body'], '_')) - 3]
-          split(triggerOutputs()?['body'], '_')[length(split(triggerOutputs()?['body'], '_')) - 2]
+          split(triggerOutputs()?['body'], '_')[sub(length(split(triggerOutputs()?['body'], '_')), 2)]
 
-Status - split(split(triggerOutputs()?['body'], '_')[length(split(triggerOutputs()?['body'], '_')) - 1], '.')[0]
+Status -replace(
+  split(triggerOutputs()?['body'], '_')[sub(length(split(triggerOutputs()?['body'], '_')), 1)],
+  concat('.', last(split(triggerOutputs()?['body'], '.'))),
+  ''
+)
+
 
 
 
