@@ -1,0 +1,418 @@
+
+//Validate required fields
+//ADMIN SETUP
+UpdateContext({IsValidAdminSetup: true});
+UpdateContext({adminValidationMessage: "Please complete the following required fields: "});
+If(
+    IsBlank(cmb_Company.Selected),
+    UpdateContext({IsValidAdminSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "Company, "
+            )
+        }
+    )
+);
+If(
+    IsBlank(cmb_Customer.Selected),
+    UpdateContext({IsValidAdminSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "Customer, "
+            )
+        }
+    )
+);
+If(
+    IsBlank(cmb_ClientStakeholder.Selected),
+    UpdateContext({IsValidAdminSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "Client Stakeholder, "
+            )
+        }
+    )
+);
+If(
+    IsBlank(txt_ProjectName.Text),
+    UpdateContext({IsValidAdminSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "Project Name, "
+            )
+        }
+    )
+);
+If(
+    IsBlank(dtp_CreationDate.SelectedDate),
+    UpdateContext({IsValidAdminSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "Creation Date, "
+            )
+        }
+    )
+);
+If(
+    IsBlank(cmb_ProjectType.Selected),
+    UpdateContext({IsValidAdminSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "Job Description, "
+            )
+        }
+    )
+);
+If(
+    IsBlank(cmb_Estimator.Selected),
+    UpdateContext({IsValidAdminSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "Estimator, "
+            )
+        }
+    )
+);
+If(
+    IsBlank(cmb_Engineer.Selected),
+    UpdateContext({IsValidAdminSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "Engineer, "
+            )
+        }
+    )
+);
+If(
+    IsBlank(dtp_DueDate.SelectedDate),
+    UpdateContext({IsValidAdminSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "Due Date, "
+            )
+        }
+    )
+);
+If(
+    IsBlank(cmb_Industry.Selected),
+    UpdateContext({IsValidAdminSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "Industry, "
+            )
+        }
+    )
+);
+If(
+    IsBlank(cmb_WorkType.Selected),
+    UpdateContext({IsValidAdminSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "Work Type, "
+            )
+        }
+    )
+);
+If(
+    IsBlank(cmb_State.Selected),
+    UpdateContext({IsValidAdminSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "State, "
+            )
+        }
+    )
+);
+If(
+    StartsWith(
+        Text(First(cmb_State.SelectedItems).State),
+        "FL"
+    ) And IsBlank(cmb_JobLocation.Selected),
+    UpdateContext({IsValidAdminSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "Job Location, "
+            )
+        }
+    )
+);
+If(
+    chkUnitPricing.Checked,
+    If(
+        IsBlank(cmb_CustomerTemplate.Selected),
+        UpdateContext({IsValidAdminSetup: false});
+        UpdateContext(
+            {
+                adminValidationMessage: Concatenate(
+                    adminValidationMessage,
+                    "Customer Template, "
+                )
+            }
+        )
+    );
+    
+);
+//Validate required fields
+//ESTIMATOR SETUP
+UpdateContext({IsValidEstimatorSetup: true});
+If(
+    IsBlank(cmb_MaterialOrigin.Selected),
+    UpdateContext({IsValidEstimatorSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "Material Origin, "
+            )
+        }
+    )
+);
+If(
+    IsBlank(cmb_BoltDiameter.Selected),
+    UpdateContext({IsValidEstimatorSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "Bolt Diameter, "
+            )
+        }
+    )
+);
+If(
+    IsBlank(txt_ConnectionAdd.Text),
+    UpdateContext({IsValidEstimatorSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "Connection Add %, "
+            )
+        }
+    )
+);
+If(
+    IsBlank(txt_BoltAdd.Text),
+    UpdateContext({IsValidEstimatorSetup: false});
+    UpdateContext(
+        {
+            adminValidationMessage: Concatenate(
+                adminValidationMessage,
+                "Bolt Add %, "
+            )
+        }
+    )
+);
+//Determine if this is a new bid
+If(
+    IsBlank(varCurrentJobSetup),
+    UpdateContext({IsNewRecord: true}),
+    UpdateContext({IsNewRecord: false})
+);
+If(
+    IsValidAdminSetup && IsValidEstimatorSetup,
+    //If all required fields contain data, we want to create a new bid OR save changes to an existing bid
+    Set(
+        varCurrentJobSetup,
+        Patch(
+            'Job Setups',
+            If(
+                !IsBlank(varCurrentJobSetup),
+                LookUp('Job Setups', 'Job Setup' = varCurrentJobSetup.'Job Setup'),
+                Defaults('Job Setups')
+            ),
+            {
+                //Admin Setup fields
+                Company: cmb_Company.Selected,
+                Customer: cmb_Customer.Selected,
+                'Client Statkeholder': cmb_ClientStakeholder.Selected,
+                Project: txt_ProjectName.Text,
+                Date: dtp_CreationDate.SelectedDate,
+                'Project Type': cmb_ProjectType.Selected,
+                'Job Location': cmb_JobLocation.Selected,
+                Estimator: cmb_Estimator.Selected,
+                Engineers: cmb_Engineer.Selected,
+                'Due Date': dtp_DueDate.SelectedDate,
+                Industry: cmb_Industry.Selected,
+                'Work Type': cmb_WorkType.Selected,
+                'Duplicate Bid': chkDuplicate.Checked,
+                'Customer RFQ No': txt_CustomerRFQ.Text,
+                State: cmb_State.Selected,
+                //Estimator Setup fields
+                'Material Origin': cmb_MaterialOrigin.Selected,
+                'Bolt Diameter': cmb_BoltDiameter.Selected,
+                Washers: cmb_LIWs.Selected.Value,
+                'Connection Add': Value(txt_ConnectionAdd.Text),
+                'Bolt Add': Value(txt_BoltAdd.Text),
+                UHMW: cmb_UHMW.Selected,
+                'CS Grade': cmb_CSGrade.Selected,
+                'SS Grade': cmb_SSGrade.Selected,
+                'AR Grade': cmb_ARGrade.Selected,
+                'Seismic Project': chkSeismicProject​.Checked,
+                'PE Sign & Seal': chkPESignSeal​.Checked,
+                'Sub NDE': chkSubNDE.Checked,
+                'Bolt Diameter Change': locBoltDiameterChange,
+                'Connection Add Change': locConnectionAddChange,
+                'Use Unit Pricing':chkUnitPricing.Checked,
+                'Customer Template':cmb_CustomerTemplate.Selected
+            }
+        )
+    );
+    //If all required fields contain data, we ncheck if we need to generate a new bid number or trigger the orchestrator flow
+    If(
+        IsNewRecord,
+        UpdateContext(
+            {
+                locShowSpinner: true
+            }
+        );
+        //For new bids only, we need to generate a bid number and copy pricing data to the Bid-Specific Pricing table
+        UpdateContext(
+            {
+                varResponse: GenerateBidNumber.Run(
+                    varCurrentJobSetup.'Job Setup',
+                    cmb_Company.Selected.'Full Name'
+                )
+            }
+        );
+        If(
+            varResponse.issuccess = "Yes",
+            //Refresh varCurrentJobSetup to pull in the new Bid Number
+            Set(
+                varCurrentJobSetup,
+                LookUp(
+                    'Job Setups',
+                    'Job Setup' = varCurrentJobSetup.'Job Setup'
+                )
+            );
+            Notify(
+                Concatenate(
+                    "Created setup successfully with Bid Number: ",
+                    varCurrentJobSetup.'Bid Number'
+                ),
+                NotificationType.Success
+            );
+            //Run the flow to copy our pricing data
+            UpdateContext({locCalcResults: CalculationOrchestrator.Run(varCurrentJobSetup.'Job Setup')});
+            Switch(
+                locCalcResults.status,
+                "OK",
+                UpdateContext({locActiveEditingSession: false});
+                Notify(
+                    locCalcResults.message,
+                    NotificationType.Success
+                ),
+                "In Progress",
+                Notify(
+                    locCalcResults.message,
+                    NotificationType.Information
+                ),
+                "Error",
+                Notify(
+                    locCalcResults.message,
+                    NotificationType.Error
+                ),
+                Notify(
+                    locCalcResults.message,
+                    NotificationType.Information
+                )
+            );,
+            //Show error if bid number was NOT created successfully
+            Notify(
+                "Error occured while generating Bid Number, please contact administrator.",
+                NotificationType.Error
+            )
+        );
+        UpdateContext(
+            {
+                locShowSpinner: false
+            }
+        ),
+        //For existing bids, if the bolt diameter, bolt add %, LIWs selection, connection add %, or seismic flag have changed, we need to run the orchestrator and recalcuate some line items
+        If(
+            locBoltDiameterChange || locBoltAddChange || locLIWChange || locConnectionAddChange || locSeismicChange,    //These variables are set in the OnChange property of the controls
+            Patch(
+                'Job Setups',
+                LookUp('Job Setups', 'Job Setup' = varCurrentJobSetup.'Job Setup'),
+                {
+                    'Bolt Diameter Change': true,
+                    'Connection Add Change': true,
+                    'Input Calc Status': 'Calculation Status'.'Not Started',
+                    'Finishing Calc Status': 'Calculation Status'.'Not Started',
+                    'Aggregation Status': 'Calculation Status'.'Not Started',
+                    'Freight Calc Status': 'Calculation Status'.'Not Started',
+                    'Bid Summary Calc Status': 'Calculation Status'.'Not Started'
+                }
+            );
+            //Run the orchestrator flow
+            UpdateContext({locCalcResults: CalculationOrchestrator.Run(varCurrentJobSetup.'Job Setup')});
+            Switch(
+                locCalcResults.status,
+                "OK", UpdateContext({locActiveEditingSession: false}); Notify(locCalcResults.message, NotificationType.Success),
+                "In Progress", Notify(locCalcResults.message, NotificationType.Information),
+                "Error", Notify(locCalcResults.message, NotificationType.Error),
+                Notify(locCalcResults.message, NotificationType.Information)
+            )
+            ,
+            //If the bolt diameter, connection add %, or LIWs have not changed, but PE Sign & Seal and/or Sub NDE have, we need to re-run the Bid Summary calc
+            If(
+                locCalculateSubcontractors,
+                Patch(
+                    'Job Setups',
+                    LookUp('Job Setups', 'Job Setup' = varCurrentJobSetup.'Job Setup'),
+                    {
+                        'Bid Summary Calc Status': 'Calculation Status'.'Not Started'
+                    }
+                );
+                //Run the orchestrator flow
+                UpdateContext({locCalcResults: CalculationOrchestrator.Run(varCurrentJobSetup.'Job Setup')});
+                Switch(
+                    locCalcResults.status,
+                    "OK", UpdateContext({locActiveEditingSession: false}); Notify(locCalcResults.message, NotificationType.Success),
+                    "In Progress", Notify(locCalcResults.message, NotificationType.Information),
+                    "Error", Notify(locCalcResults.message, NotificationType.Error),
+                    Notify(locCalcResults.message, NotificationType.Information)
+                )
+            )
+        );
+        //For existing bids, display message confirming the save was successful
+        Notify(
+            Concatenate(
+                "Updated Setup: ",
+                varCurrentJobSetup.'Bid Number'
+            ),
+            NotificationType.Success
+        )
+    ),
+    //Else, if we have field validation errors, display error messages
+    Notify(
+        adminValidationMessage,
+        NotificationType.Error
+    )
+)
