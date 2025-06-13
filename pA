@@ -1,4 +1,19 @@
 
+Patch(
+    SharePointList, // replace with your list name
+    Defaults(SharePointList),
+    {
+        Title: TextInput1.Text,
+        SubmissionDate: DatePicker1.SelectedDate,
+        SubmittedBy: {
+            '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+            Claims: "i:0#.f|membership|" & Lower(User().Email)
+        }
+    }
+)
+
+
+
 //Validate required fields
 //ADMIN SETUP
 UpdateContext({IsValidAdminSetup: true});
