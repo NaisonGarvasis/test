@@ -12,6 +12,7 @@ Patch(
     }
 )
 
+//mod(add(mul(int(formatDateTime(utcNow(), 'HH')), 60), int(formatDateTime(utcNow(), 'mm'))), int(variables('intervalVar')))
 
 
 //Validate required fields
