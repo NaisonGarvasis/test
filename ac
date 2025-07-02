@@ -1,5 +1,6 @@
 {
   "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
   "version": "1.4",
   "body": [
     {
@@ -11,7 +12,7 @@
     },
     {
       "type": "TextBlock",
-      "text": "Tap your region below to get connected with the right team.",
+      "text": "Tap your region below to call the right support line.",
       "wrap": true,
       "spacing": "Small"
     },
@@ -24,39 +25,29 @@
           "url": "tel:12345678"
         },
         {
-          "type": "Action.Submit",
-          "title": "North America",
-          "data": {
-            "region": "North America"
-          }
+          "type": "Action.OpenUrl",
+          "title": "🌎 North America",
+          "url": "tel:+11234567890"
         },
         {
-          "type": "Action.Submit",
-          "title": "Europe",
-          "data": {
-            "region": "Europe"
-          }
+          "type": "Action.OpenUrl",
+          "title": "🇪🇺 Europe",
+          "url": "tel:+441234567890"
         },
         {
-          "type": "Action.Submit",
-          "title": "Asia-Pacific",
-          "data": {
-            "region": "Asia-Pacific"
-          }
+          "type": "Action.OpenUrl",
+          "title": "🌏 Asia-Pacific",
+          "url": "tel:+861234567890"
         },
         {
-          "type": "Action.Submit",
-          "title": "Middle East & Africa",
-          "data": {
-            "region": "Middle East & Africa"
-          }
+          "type": "Action.OpenUrl",
+          "title": "🌍 Middle East & Africa",
+          "url": "tel:+971123456789"
         },
         {
-          "type": "Action.Submit",
-          "title": "Latin America",
-          "data": {
-            "region": "Latin America"
-          }
+          "type": "Action.OpenUrl",
+          "title": "🌎 Latin America",
+          "url": "tel:+551234567890"
         }
       ]
     },
@@ -66,6 +57,5 @@
       "wrap": true,
       "spacing": "Medium"
     }
-  ],
-  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
+  ]
 }
