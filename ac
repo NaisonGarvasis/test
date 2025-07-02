@@ -1,0 +1,71 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.4",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "**Need to speak with a live agent?**",
+      "wrap": true,
+      "weight": "Bolder",
+      "size": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Tap your region below to get connected with the right team.",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "ActionSet",
+      "actions": [
+        {
+          "type": "Action.OpenUrl",
+          "title": "📞 Internal Support",
+          "url": "tel:12345678"
+        },
+        {
+          "type": "Action.Submit",
+          "title": "North America",
+          "data": {
+            "region": "North America"
+          }
+        },
+        {
+          "type": "Action.Submit",
+          "title": "Europe",
+          "data": {
+            "region": "Europe"
+          }
+        },
+        {
+          "type": "Action.Submit",
+          "title": "Asia-Pacific",
+          "data": {
+            "region": "Asia-Pacific"
+          }
+        },
+        {
+          "type": "Action.Submit",
+          "title": "Middle East & Africa",
+          "data": {
+            "region": "Middle East & Africa"
+          }
+        },
+        {
+          "type": "Action.Submit",
+          "title": "Latin America",
+          "data": {
+            "region": "Latin America"
+          }
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "[📧 Email us at support@example.com](mailto:support@example.com)",
+      "wrap": true,
+      "spacing": "Medium"
+    }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
+}
