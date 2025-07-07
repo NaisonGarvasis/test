@@ -1,0 +1,13 @@
+{
+  "type": "Input.ChoiceSet",
+  "id": "department",
+  "style": "expanded",
+  "isMultiSelect": false,
+  "spacing": "medium",
+  "choices": [
+    { "title": "HR", "value": "hr" },
+    { "title": "Marketing", "value": "marketing" },
+    { "title": "Engineering", "value": "engineering" },
+    { "title": "Finance", "value": "finance" }
+  ]
+}
