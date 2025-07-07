@@ -1,13 +1,31 @@
 {
-  "type": "Input.ChoiceSet",
-  "id": "department",
-  "style": "expanded",
-  "isMultiSelect": false,
-  "spacing": "medium",
-  "choices": [
-    { "title": "HR", "value": "hr" },
-    { "title": "Marketing", "value": "marketing" },
-    { "title": "Engineering", "value": "engineering" },
-    { "title": "Finance", "value": "finance" }
+  "type": "AdaptiveCard",
+  "version": "1.4",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Which department do you want to contact?",
+      "wrap": true,
+      "weight": "Bolder"
+    },
+    {
+      "type": "Input.ChoiceSet",
+      "id": "department",
+      "style": "expanded",
+      "isMultiSelect": false,
+      "spacing": "medium",
+      "choices": [
+        { "title": "HR", "value": "hr" },
+        { "title": "Marketing", "value": "marketing" },
+        { "title": "Engineering", "value": "engineering" },
+        { "title": "Finance", "value": "finance" }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Submit"
+    }
   ]
 }
