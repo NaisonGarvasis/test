@@ -1,0 +1,43 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.4",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "Which department do you want to contact?",
+      "wrap": true,
+      "size": "Medium",
+      "weight": "Bolder"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "HR",
+      "data": {
+        "department": "hr"
+      }
+    },
+    {
+      "type": "Action.Submit",
+      "title": "Marketing",
+      "data": {
+        "department": "marketing"
+      }
+    },
+    {
+      "type": "Action.Submit",
+      "title": "Engineering",
+      "data": {
+        "department": "engineering"
+      }
+    },
+    {
+      "type": "Action.Submit",
+      "title": "Finance",
+      "data": {
+        "department": "finance"
+      }
+    }
+  ]
+}
