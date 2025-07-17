@@ -1,0 +1,12 @@
+<b>Sender:</b> @{items('Apply_to_each')?['sender']}<br />
+<b>Subject:</b> @{items('Apply_to_each')?['subject']}<br />
+<b>Recipients:</b> @{items('Apply_to_each')?['recipients']}<br />
+<hr />
+
+
+
+
+Sender: @{items('Apply_to_each')?['sender']}
+Subject: @{items('Apply_to_each')?['subject']}
+Recipients: @{items('Apply_to_each')?['recipients']}
+----------------------------
